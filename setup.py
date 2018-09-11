@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
     :author:    kuangcp 
-    :homepage:  https://github.com/kuangcp/scripts
+    :homepage:  https://gitee.com/gin9/baidu-trans-cli/tree/master/
     :license:   MIT, see LICENSE for more details.
     :copyright: Copyright (c) 2018 kuangcp. All rights reserved
 """
@@ -11,9 +11,7 @@ import codecs
 import baidu_trans_cli
 import setuptools.command.test
 
-
 # -*- Long Description -*-
-
 def long_description():
     try:
         return codecs.open('README.md', 'r', 'utf-8').read()
@@ -23,13 +21,13 @@ def long_description():
 
 setuptools.setup(
     name='baidu-trans-cli',
-    version='0.0.6',
+    version='0.0.7',
     description='use baidu translation api in terminal',
     long_description=long_description(),
     keywords='translation',
     author='gin9',
     author_email='kuangcp@aliyun.com',
-    url='https://github.com/Kuangcp/Script/blob/master/python/tool/translate/baidu.py',
+    url='https://gitee.com/gin9/baidu-trans-cli/tree/master/',
     license='MIT License',
     platforms=['any'],
     install_requires = ['fire>=0.1.3', 'requests>=2.19.1', 'urllib3>=1.23'],

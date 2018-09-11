@@ -24,8 +24,8 @@ def configureIncorrect(configFile):
 # load json file add init script dir 
 def loadConfig():
     useDir = os.environ['HOME']
-    configDir = useDir + '/.config/kuangcp'
-    appConfigDir = configDir +'/baiduTrans'
+    configDir = useDir + '/.config/ai_kuangcp'
+    appConfigDir = configDir +'/baidu-trans'
     configFile = appConfigDir +'/main.json'
 
     if not os.path.exists(configDir):
@@ -55,9 +55,9 @@ def sendRequest(query, fromLang='zh', toLang='en'):
     salt = random.randint(32768, 65536)
     sign = appid+query+str(salt)+secretKey
 
-    m1 = hashlib.md5()
-    m1.update(sign.encode("utf-8"))
-    sign = m1.hexdigest()
+    temp = hashlib.md5()
+    temp.update(sign.encode("utf-8"))
+    sign = temp.hexdigest()
     
     myurl = myurl+'?appid='+appid+'&q='+quote(query)+'&from='+fromLang+'&to='+toLang+'&salt='+str(salt)+'&sign='+sign
     # print('https://fanyi-api.baidu.com'+myurl)
@@ -86,6 +86,7 @@ def help():
     printParam("ez", "word", "Translating English into Chinese")
     logInfo("\nA space must be followed by a comma.\nStatements containing special characters need to be wrapped with double quotes.")
 
+# normalize chinese char
 def normalizationData(word):
     if word is None:
         logError('Please input what you want to translation')
