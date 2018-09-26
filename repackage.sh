@@ -1,5 +1,5 @@
 rm -rf *.egg-info build dist &&
-	python3 setup.py bdist_wheel
+	python3 setup.py bdist
 
 if [ "$1" = "up" ];then 
 	echo "prepare upload"

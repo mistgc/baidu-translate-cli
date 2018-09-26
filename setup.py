@@ -16,12 +16,12 @@ def long_description():
     try:
         return codecs.open('README.md', 'r', 'utf-8').read()
     except IOError:
-        return 'Long description error: Missing README.rst file'
+        return 'Long description error: Missing README.md file'
 
 
 setuptools.setup(
     name='baidu-trans-cli',
-    version='0.0.7',
+    version='0.0.8',
     description='use baidu translation api in terminal',
     long_description=long_description(),
     keywords='translation',
