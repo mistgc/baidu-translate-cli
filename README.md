@@ -8,7 +8,7 @@
 	- pip install *.whl
 
 ## get a key 
-1. register a account on [this site](http://api.fanyi.baidu.com/api/trans/product/index)
+1. register a account on [this site](http://api.fanyi.baidu.com/api/trans/product/index) `2000,000 characters per month is free.`
 1. get key and secretID, write into `~/.config/ai_kuangcp/baidu-trans/main.json`
 
 
