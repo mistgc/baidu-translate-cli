@@ -7,6 +7,12 @@ import random
 import requests
 import fire
 
+# config 
+userDir = os.environ['HOME']
+configDir = userDir + '/.config/application-config'
+appConfigDir = configDir +'/baidu-trans'
+configFile = appConfigDir +'/main.json'
+
 red='\033[0;31m'
 green='\033[0;32m'
 yellow='\033[0;33m'
@@ -17,21 +23,23 @@ white='\033[0;37m'
 end='\033[0m'
 
 def configureIncorrect(configFile):
-    logError("Please fill up the configuration infomation : appid & secretKey on \033[0;32m"+configFile)
     print("You can register an account on this : "+green+"http://api.fanyi.baidu.com/api/trans/product/index")
-    sys.exit(1)
+    logError("Please fill up the configuration infomation : appid & secretKey on \033[0;32m"+configFile)
+
+def isEmpty(target):
+    if target is None or target == '' or target == ' ':
+        return True
+    else:
+        return False
+
+def confirmDir(dirs):
+    if not os.path.exists(dirs):
+        os.mkdir(dirs)
 
 # load json file add init script dir 
 def loadConfig():
-    useDir = os.environ['HOME']
-    configDir = useDir + '/.config/application-config'
-    appConfigDir = configDir +'/baidu-trans'
-    configFile = appConfigDir +'/main.json'
-
-    if not os.path.exists(configDir):
-        os.mkdir(configDir)
-    if not os.path.exists(appConfigDir):
-        os.mkdir(appConfigDir)
+    confirmDir(configDir)
+    confirmDir(appConfigDir)
 
     if not os.path.exists(configFile):
         with open(configFile, 'w') as file:
@@ -39,10 +47,7 @@ def loadConfig():
         configureIncorrect(configFile)
 
     data = json.load(open(configFile))
-    appid = data['appid'] 
-    secretKey = data['secretKey']
-
-    if appid is None or secretKey is None or appid == "" or secretKey == "" or appid == " " or secretKey == " " :
+    if isEmpty(data['appid'] ) or isEmpty(data['secretKey']):
         configureIncorrect(configFile)
 
     return data
@@ -72,6 +77,7 @@ def sendRequest(query, fromLang='zh', toLang='en'):
 
 def logError(msg):
     print("%s%s%s"%(red, msg, end))
+    sys.exit(1)
 
 def logInfo(msg):
     print("%s%s%s"%(green, msg, end))
@@ -90,33 +96,32 @@ def help():
 def normalizationData(word):
     if word is None:
         logError('Please input what you want to translation')
-        sys.exit(1)
     word = word.replace(',', '')
     word = word.replace('(', '')
     word = word.replace(')', ',')
     
     return word
 
-def handler(*args):
+def handlerParam(*args):
     # print('origin param: ', args)
     if args == ():
-        logError("Please select a parameter atleast")
-        sys.exit(1)
+        logError("Please select at least one parameter.")
+    
     verb = args[0]
     if verb == '-h':
         help()
         sys.exit(0)
+    
     if verb == '-v':
-        print('version:0.1.2')
+        print('version: 0.1.3')
         sys.exit(0)
-    word=str(list(args))[1:-1].replace('\'', '')
 
+    word=str(list(args))[1:-1].replace('\'', '')
     # print('verb:', verb)
     paramList = ['ez', 'ze']
     if verb in paramList:
         if len(word) <= 2:
             logError("Please input the sentence that needs to be translated.")
-            return
         word = normalizationData(word)
         if verb == "ez":
             # print('en:', word)
@@ -131,7 +136,7 @@ def handler(*args):
 
 def main():
     try:
-        fire.Fire(handler)
+        fire.Fire(handlerParam)
     except requests.exceptions.ConnectionError:
         logError("Please check the network connection.")
 
