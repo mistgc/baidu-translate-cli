@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 """
     :author:    kuangcp 
     :homepage:  https://gitee.com/gin9/baidu-trans-cli/tree/master/
@@ -43,7 +40,7 @@ setuptools.setup(
         'Natural Language :: Chinese (Simplified)',
         'Natural Language :: English',
         'Topic :: Utilities',
-        'Topic :: Terminals',
+        'Topic :: Terminal Tool',
         "Topic :: System :: Distributed Computing",
 
         # Pick your license as you wish (should match "license" above)
