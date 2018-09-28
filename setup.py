@@ -15,10 +15,9 @@ def long_description():
     except IOError:
         return 'Long description error: Missing README.md file'
 
-
 setuptools.setup(
     name='baidu-trans-cli',
-    version='0.0.8',
+    version='0.1.2',
     description='use baidu translation api in terminal',
     long_description=long_description(),
     keywords='translation',
@@ -40,7 +39,7 @@ setuptools.setup(
         'Natural Language :: Chinese (Simplified)',
         'Natural Language :: English',
         'Topic :: Utilities',
-        'Topic :: Terminal Tool',
+        'Topic :: Terminals',
         "Topic :: System :: Distributed Computing",
 
         # Pick your license as you wish (should match "license" above)

@@ -24,7 +24,7 @@ def configureIncorrect(configFile):
 # load json file add init script dir 
 def loadConfig():
     useDir = os.environ['HOME']
-    configDir = useDir + '/.config/ai_kuangcp'
+    configDir = useDir + '/.config/application-config'
     appConfigDir = configDir +'/baidu-trans'
     configFile = appConfigDir +'/main.json'
 
@@ -84,7 +84,7 @@ def help():
     printParam("-h", "", "help")
     printParam("ze","word", "Translating Chinese into English")
     printParam("ez", "word", "Translating English into Chinese")
-    logInfo("\nA space must be followed by a comma.\nStatements containing special characters need to be wrapped with double quotes.")
+    logInfo("\nStatements containing special characters need to be wrapped with double quotes.")
 
 # normalize chinese char
 def normalizationData(word):
@@ -105,6 +105,9 @@ def handler(*args):
     verb = args[0]
     if verb == '-h':
         help()
+        sys.exit(0)
+    if verb == '-v':
+        print('version:0.1.2')
         sys.exit(0)
     word=str(list(args))[1:-1].replace('\'', '')
 
