@@ -1,5 +1,6 @@
 import os
 import sys
+import platform
 import json
 import hashlib
 from urllib.parse import quote
@@ -24,6 +25,14 @@ end='\033[0m'
 
 def configureIncorrect(configFile):
     print("You can register an account on this : "+green+"http://api.fanyi.baidu.com/api/trans/product/index")
+    sysstr = platform.system()
+    if(sysstr =="Windows"):
+        configFile = configFile.replace('/','\\')
+    elif(sysstr == "Linux"):
+        pass
+    else:
+        logError('Not support this system')
+    
     logError("Please fill up the configuration infomation : appid & secretKey on \033[0;32m"+configFile)
 
 def isEmpty(target):
