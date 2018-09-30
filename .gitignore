@@ -1,7 +1,7 @@
 build/
 dist/
 
-baidu/
+venv/
 
 .vscode/
 

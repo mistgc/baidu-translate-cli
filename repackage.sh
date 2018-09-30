@@ -11,7 +11,7 @@ help(){
     printf "Run：$red sh repackage.sh $green<verb> $yellow<args>$end\n"
     format="  $green%-6s $yellow%-12s$end%-20s\n"
     printf "$format" "" "" "打包"
-    printf "$format" "-v" "<version>" "更改版本"
+    printf "$format" "-v" "<version>" "当前版本/更改版本"
     printf "$format" "-up" "" "上传"
     printf "$format" "-h" "" "帮助"
 }
