@@ -10,7 +10,7 @@ import fire
 
 # config 
 userDir = os.environ['HOME']
-configDir = userDir + '/.config/application-config'
+configDir = userDir + '/.config/app-conf'
 appConfigDir = configDir +'/baidu-trans'
 configFile = appConfigDir +'/main.json'
 
