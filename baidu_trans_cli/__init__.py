@@ -122,7 +122,7 @@ def handlerParam(*args):
         sys.exit(0)
     
     if verb == '-v':
-        print('version: 0.1.4')
+        print('version: 0.1.5')
         sys.exit(0)
 
     word=str(list(args))[1:-1].replace('\'', '')
