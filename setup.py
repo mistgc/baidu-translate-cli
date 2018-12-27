@@ -17,7 +17,7 @@ def long_description():
 
 setuptools.setup(
     name='baidu-trans-cli',
-    version='0.2.0'
+    version='0.2.1'
     ,description='use baidu translation api in terminal',
     long_description=long_description(),
     keywords='translation',
@@ -26,7 +26,7 @@ setuptools.setup(
     url='https://gitee.com/gin9/baidu-trans-cli/tree/master/',
     license='MIT License',
     platforms=['any'],
-    install_requires = ['fire>=0.1.3', 'requests>=2.19.1', 'urllib3>=1.23'],
+    install_requires = ['fire>=0.1.3', 'requests>=2.19.1', 'urllib3>=1.23', 'pyperclip>=1.7.0'],
     classifiers=[
         # How mature is this project? Common values are
         #   3 - Alpha

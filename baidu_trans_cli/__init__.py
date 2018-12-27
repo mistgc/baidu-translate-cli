@@ -131,7 +131,7 @@ def handlerParam(verb=None, *args):
         sys.exit(0)
 
     if verb == '-v':
-        print('version: 0.2.0')
+        print('version: 0.2.1')
         sys.exit(0)
     
     if verb == '-c':
