@@ -8,7 +8,7 @@ import random
 import requests
 import fire
 
-# config 
+# config
 userDir = os.environ['HOME']
 configDir = userDir + '/.config/app-conf'
 appConfigDir = configDir +'/baidu-trans'
@@ -32,7 +32,7 @@ def configureIncorrect(configFile):
         pass
     else:
         logError('Not support this system')
-    
+
     logError("Please fill up the configuration infomation : appid & secretKey on \033[0;32m"+configFile)
 
 def isEmpty(target):
@@ -45,7 +45,7 @@ def confirmDir(dirs):
     if not os.path.exists(dirs):
         os.mkdir(dirs)
 
-# load json file add init script dir 
+# load json file add init script dir
 def loadConfig():
     confirmDir(configDir)
     confirmDir(appConfigDir)
@@ -61,10 +61,14 @@ def loadConfig():
 
     return data
 
-def sendRequest(query, fromLang='zh', toLang='en'):
+def sendRequest(query=None, fromLang='zh', toLang='en', color=True):
+    # print('query:', query)
+    if query is None or len(query) == 0:
+        logError("Please select at least one parameter.")
+        return 0
     data = loadConfig()
-    appid = data['appid'] 
-    secretKey = data['secretKey'] 
+    appid = data['appid']
+    secretKey = data['secretKey']
     myurl = '/api/trans/vip/translate'
     salt = random.randint(32768, 65536)
     sign = appid+query+str(salt)+secretKey
@@ -72,14 +76,18 @@ def sendRequest(query, fromLang='zh', toLang='en'):
     temp = hashlib.md5()
     temp.update(sign.encode("utf-8"))
     sign = temp.hexdigest()
-    
+
     myurl = myurl+'?appid='+appid+'&q='+quote(query)+'&from='+fromLang+'&to='+toLang+'&salt='+str(salt)+'&sign='+sign
     # print('https://fanyi-api.baidu.com'+myurl)
 
     result = requests.get('https://fanyi-api.baidu.com'+myurl, timeout=4)
     resultJson = json.loads(result.text)
     try:
-        logInfo(resultJson["trans_result"][0]["dst"])
+        resultText = resultJson["trans_result"][0]["dst"]
+        if color:
+            logInfo(resultText)
+        else:
+            print(resultText)
     except :
         logError("Error: Please check main.json or baidu api")
         print(result.text)
@@ -108,40 +116,48 @@ def normalizationData(word):
     word = word.replace(',', '')
     word = word.replace('(', '')
     word = word.replace(')', ',')
-    
+
     return word
 
-def handlerParam(*args):
-    # print('origin param: ', args)
-    if args == ():
+def handlerParam(verb=None, *args):
+    color = True
+    # print('input param: ', verb, args)
+    if verb is None:
         logError("Please select at least one parameter.")
-    
-    verb = args[0]
+
     if verb == '-h':
         help()
         sys.exit(0)
-    
-    if verb == '-v':
-        print('version: 0.1.5')
-        sys.exit(0)
 
-    word=str(list(args))[1:-1].replace('\'', '')
-    # print('verb:', verb)
+    if verb == '-v':
+        print('version: 0.1.6')
+        sys.exit(0)
+    
+    if verb == '-s':
+        verb = args[0]
+        args = args[1:]
+        color = False
+
+    if len(args) == 0:
+        word = verb
+    else:
+        word = str(list(args))[1:-1].replace('\'', '')
+    # print('word:', word)
     paramList = ['ez', 'ze']
     if verb in paramList:
-        if len(word) <= 2:
+        if len(word) <= 1:
             logError("Please input the sentence that needs to be translated.")
         word = normalizationData(word)
         if verb == "ez":
             # print('en:', word)
-            sendRequest(word[2:], 'en', 'zh')
+            sendRequest(word, 'en', 'zh', color)
         if verb == "ze":
             # print('zn:', word)
-            sendRequest(word[2:], 'zh', 'en')  
-    else:  
-        word = normalizationData(word)      
+            sendRequest(word, 'zh', 'en', color)
+    else:
+        word = normalizationData(word)
         # print('default ze:', word)
-        sendRequest(word)
+        sendRequest(word, color=color)
 
 def main():
     try:

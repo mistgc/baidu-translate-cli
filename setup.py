@@ -17,7 +17,7 @@ def long_description():
 
 setuptools.setup(
     name='baidu-trans-cli',
-    version='0.1.5'
+    version='0.1.6'
     ,description='use baidu translation api in terminal',
     long_description=long_description(),
     keywords='translation',
