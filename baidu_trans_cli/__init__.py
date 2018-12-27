@@ -7,6 +7,7 @@ from urllib.parse import quote
 import random
 import requests
 import fire
+import pyperclip
 
 # config
 userDir = os.environ['HOME']
@@ -61,7 +62,7 @@ def loadConfig():
 
     return data
 
-def sendRequest(query=None, fromLang='zh', toLang='en', color=True):
+def sendRequest(query=None, fromLang='zh', toLang='en', copy=False):
     # print('query:', query)
     if query is None or len(query) == 0:
         logError("Please select at least one parameter.")
@@ -84,10 +85,10 @@ def sendRequest(query=None, fromLang='zh', toLang='en', color=True):
     resultJson = json.loads(result.text)
     try:
         resultText = resultJson["trans_result"][0]["dst"]
-        if color:
-            logInfo(resultText)
-        else:
-            print(resultText)
+        logInfo(resultText)
+        if copy:
+            # on linux, finally invoke xclip 
+            pyperclip.copy(resultText)
     except :
         logError("Error: Please check main.json or baidu api")
         print(result.text)
@@ -120,7 +121,7 @@ def normalizationData(word):
     return word
 
 def handlerParam(verb=None, *args):
-    color = True
+    copy = False
     # print('input param: ', verb, args)
     if verb is None:
         logError("Please select at least one parameter.")
@@ -130,13 +131,13 @@ def handlerParam(verb=None, *args):
         sys.exit(0)
 
     if verb == '-v':
-        print('version: 0.1.6')
+        print('version: 0.2.0')
         sys.exit(0)
     
-    if verb == '-s':
+    if verb == '-c':
         verb = args[0]
         args = args[1:]
-        color = False
+        copy = True
 
     if len(args) == 0:
         word = verb
@@ -150,14 +151,14 @@ def handlerParam(verb=None, *args):
         word = normalizationData(word)
         if verb == "ez":
             # print('en:', word)
-            sendRequest(word, 'en', 'zh', color)
+            sendRequest(word, 'en', 'zh', copy)
         if verb == "ze":
             # print('zn:', word)
-            sendRequest(word, 'zh', 'en', color)
+            sendRequest(word, 'zh', 'en', copy)
     else:
         word = normalizationData(word)
         # print('default ze:', word)
-        sendRequest(word, color=color)
+        sendRequest(word, copy=copy)
 
 def main():
     try:

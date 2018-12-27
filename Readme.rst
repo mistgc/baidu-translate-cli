@@ -1,5 +1,5 @@
-
-|python27| |python35| 
+Baidu Translation
+=================
 
 this is a python translation package based on baidu translation api.
 
@@ -13,8 +13,7 @@ this is a python translation package based on baidu translation api.
 2. get key and secretID, write into **~/.config/app-conf/baidu-trans/main.json**
 
 **Usage**
-.. code:: bash
-    baidu-trans -h 
 
-.. |python27| image:: https://img.shields.io/badge/python-2.7-ff69b4.svg
-.. |python35| image:: https://img.shields.io/badge/python-3.5-green.svg
+.. code:: bash
+    
+    baidu-trans -h
