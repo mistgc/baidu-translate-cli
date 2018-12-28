@@ -120,29 +120,7 @@ def normalizationData(word):
 
     return word
 
-def handlerParam(verb=None, *args):
-    copy = False
-    # print('input param: ', verb, args)
-    if verb is None:
-        logError("Please select at least one parameter.")
-
-    if verb == '-h':
-        help()
-        sys.exit(0)
-
-    if verb == '-v':
-        print('version: 0.2.1')
-        sys.exit(0)
-    
-    if verb == '-c':
-        verb = args[0]
-        args = args[1:]
-        copy = True
-
-    if len(args) == 0:
-        word = verb
-    else:
-        word = str(list(args))[1:-1].replace('\'', '')
+def translation(verb, word, copy):
     # print('word:', word)
     paramList = ['ez', 'ze']
     if verb in paramList:
@@ -160,9 +138,41 @@ def handlerParam(verb=None, *args):
         # print('default ze:', word)
         sendRequest(word, copy=copy)
 
+def handleSimpleOption(verb):
+    if verb is None:
+        logError("Please select at least one parameter.")
+
+    if verb == '-h':
+        help()
+        sys.exit(0)
+
+    if verb == '-v':
+        print('version: 0.2.2')
+        sys.exit(0)
+
+def handleParam(verb=None, *args):
+    # print('input param: ', verb, args)
+    handleSimpleOption(verb)
+    
+    copy = False
+    if verb == '-c':
+        if len(args) == 0:
+            logError("Please select at least one parameter.")
+            sys.exit(1)
+        verb = args[0]
+        args = args[1:]
+        copy = True
+
+    if len(args) == 0:
+        word = verb
+    else:
+        word = str(list(args))[1:-1].replace('\'', '')
+    
+    translation(verb, word, copy)
+
 def main():
     try:
-        fire.Fire(handlerParam)
+        fire.Fire(handleParam)
     except requests.exceptions.ConnectionError:
         logError("Please check the network connection.")
 
