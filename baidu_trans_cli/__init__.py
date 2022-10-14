@@ -10,7 +10,11 @@ import fire
 import pyperclip
 
 # config
-userDir = os.environ['HOME']
+if platform.system() == "Windows":
+    userDir = os.environ['HOMEPATH']
+else:
+    userDir = os.environ['HOME']
+
 configDir = userDir + '/.config'
 appConfigDir = configDir +'/baidu-trans-cli'
 configFile = appConfigDir +'/main.json'
