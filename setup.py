@@ -1,8 +1,13 @@
 """
-    :author:    kuangcp 
+    :author:    kuangcp (origin)
     :homepage:  https://gitee.com/gin9/baidu-trans-cli/tree/master/
     :license:   MIT, see LICENSE for more details.
     :copyright: Copyright (c) 2018 kuangcp. All rights reserved
+
+    :author:   george cai (customized)
+    :homepage:  https://github.com/zaiic/translate-cli.git
+    :license:   MIT, see LICENSE for more details.
+    :copyright: Copyright (c) 2022 george cai. All rights reserved
 """
 import codecs
 import baidu_trans_cli
@@ -16,14 +21,14 @@ def long_description():
         return 'Long description error: Missing README.md file'
 
 setuptools.setup(
-    name='baidu-trans-cli',
-    version='0.2.2'
+    name='baidu-translate-cli',
+    version='0.2.3'
     ,description='use baidu translation api in terminal',
     long_description=long_description(),
     keywords='translation',
-    author='gin9',
-    author_email='kuangcp@aliyun.com',
-    url='https://gitee.com/gin9/baidu-trans-cli/tree/master/',
+    author=['gin9(origin)', 'zaiic(customized)'],
+    author_email=['kuangcp@aliyun.com', 'zaiic@qq.com'],
+    url='',
     license='MIT License',
     platforms=['any'],
     install_requires = ['fire>=0.1.3', 'requests>=2.19.1', 'urllib3>=1.23', 'pyperclip>=1.7.0'],
@@ -60,7 +65,7 @@ setuptools.setup(
     },
     entry_points={
         'console_scripts': [
-            'baidu-trans = baidu_trans_cli:main',
+            'trans = baidu_trans_cli:main',
         ],
     },
 )

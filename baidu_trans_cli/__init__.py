@@ -11,8 +11,8 @@ import pyperclip
 
 # config
 userDir = os.environ['HOME']
-configDir = userDir + '/.config/app-conf'
-appConfigDir = configDir +'/baidu-trans'
+configDir = userDir + '/.config'
+appConfigDir = configDir +'/baidu-trans-cli'
 configFile = appConfigDir +'/main.json'
 
 red='\033[0;31m'
@@ -62,7 +62,7 @@ def loadConfig():
 
     return data
 
-def sendRequest(query=None, fromLang='zh', toLang='en', copy=False):
+def sendRequest(query=None, fromLang='en', toLang='zh', copy=False):
     # print('query:', query)
     if query is None or len(query) == 0:
         logError("Please select at least one parameter.")
