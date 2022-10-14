@@ -167,11 +167,8 @@ def handleParam(verb=None, *args):
         args = args[1:]
         copy = True
 
-    if len(args) == 0:
-        word = verb
-    else:
-        word = str(list(args))[1:-1].replace('\'', '')
-    
+    word = sys.argv[-1]
+
     translation(verb, word, copy)
 
 def main():
